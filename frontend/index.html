@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Linear Regression Predictor</title>
+</head>
+
+<body>
+
+    <h1> Marks Prediction</h1>
+
+    <label>Enter Study Hours:</label>
+    <input type="number" id="hours" step="0.1">
+
+    <button onclick="predictMarks()">Predict</button>
+
+    <h2 id="result"></h2>
+
+    <script>
+        async function predictMarks() {
+
+            const hours = document.getElementById("hours").value;
+
+            const response = await fetch("http://127.0.0.1:8000/predict", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    Hours: parseFloat(hours)
+                })
+            });
+
+            const data = await response.json();
+
+            document.getElementById("result").innerText =
+                "Predicted Marks: " + data.Predicted_Marks;
+        }
+    </script>
+
+</body>
+</html>
